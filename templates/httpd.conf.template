@@ -1,0 +1,10 @@
+server {
+    listen 80;
+
+    location / {
+        include /etc/nginx/conflib/oidc-proxy.conf;
+        proxy_pass http://httpd:80;
+    }
+
+    include /etc/nginx/conflib/oidc-server.conf;
+}
