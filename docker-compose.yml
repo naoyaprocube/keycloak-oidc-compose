@@ -1,8 +1,9 @@
 services:
   keycloak:
     image: procube/keycloak-passwordless
+    command: "start"
     environment:
-      KC_DB_URL: jdbc:mysql://mysql/keycloak
+      KC_DB_URL: jdbc:mysql://mysql:3306/keycloak
       KC_DB_USER: keycloak
       KC_DB_PASSWORD: password
       OIDC_CLIENT_SECRET: 123456
@@ -16,7 +17,7 @@ services:
   oidc:
     image: procube/nginx-oidc
     ports:
-      - "8080:80"
+      - "8081:80"
     environment:
       OIDC_CLIENT_ID: keycloak
       OIDC_CLIENT_SECRET: 123456
