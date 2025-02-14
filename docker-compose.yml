@@ -3,9 +3,11 @@ services:
     image: procube/keycloak-passwordless
     command: "start"
     environment:
-      KC_DB_URL: jdbc:mysql://mysql:3306/keycloak
+      KC_DB_URL: jdbc:mysql://mysql/keycloak
       KC_DB_USER: keycloak
       KC_DB_PASSWORD: password
+      KC_HOSTNAME_URL: http://localhost:8080
+      KC_WEBGATE_REALM_FRONTEND_URL: https://idp.${CODESPACE_NAME}-8081.app.github.dev
       OIDC_CLIENT_SECRET: 123456
   mysql:
     image: mysql
@@ -21,11 +23,11 @@ services:
     environment:
       OIDC_CLIENT_ID: keycloak
       OIDC_CLIENT_SECRET: 123456
-      OIDC_ISSUER: http://keycloak:8080/realms/develop
-      OIDC_AUTH_ENDPOINT: http://keycloak:8080/realms/develop/protocol/openid-connect/auth
-      OIDC_LOGOUT_ENDPOINT: http://keycloak:8080/realms/develop/protocol/openid-connect/logout
-      OIDC_TOKEN_ENDPOINT: http://keycloak:8080/realms/develop/protocol/openid-connect/token
-      OIDC_USER_INFO_ENDPOINT: http://keycloak:8080/realms/develop/protocol/openid-connect/userinfo
+      OIDC_ISSUER: https://idp.${CODESPACE_NAME}-8081.app.github.dev/realms/webgate
+      OIDC_AUTH_ENDPOINT: https://idp.${CODESPACE_NAME}-8081.app.github.dev/realms/webgate/protocol/openid-connect/auth
+      OIDC_LOGOUT_ENDPOINT: https://idp.${CODESPACE_NAME}-8081.app.github.dev/realms/webgate/protocol/openid-connect/logout
+      OIDC_TOKEN_ENDPOINT: https://idp.${CODESPACE_NAME}-8081.app.github.dev/realms/webgate/protocol/openid-connect/token
+      OIDC_USER_INFO_ENDPOINT: https://idp.${CODESPACE_NAME}-8081.app.github.dev/realms/webgate/protocol/openid-connect/userinfo
       OIDC_JWT_GEN_KEY: 654321
     volumes:
       - ./templates:/etc/nginx/templates

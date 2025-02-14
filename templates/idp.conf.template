@@ -1,0 +1,12 @@
+upstream idp_upstream {
+	server keycloak:8080;
+}
+
+server {
+    listen 80;
+    server_name idp.${CODESPACE_NAME}-8081.app.github.dev;
+    location / {
+        proxy_pass http://idp_upstream;
+        proxy_http_version 1.1;
+    }
+}
